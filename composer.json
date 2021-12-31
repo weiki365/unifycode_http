@@ -1,0 +1,26 @@
+{
+    "name": "weiki/unifycode_http",
+    "description": "通过一致性代码减少代码变种",
+    "keywords": ["http", "code", "psr7"],
+    "type": "libraty",
+    "license": "Apache-2.0",
+    "autoload": {
+        "psr-4": {
+            "Weiki\\UnifyCode\\": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "weiki",
+            "email": "happy_gzg@126.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "guzzlehttp/psr7": "2.1.x-dev",
+        "weiki/basefunction": "dev-fix-1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9.5.x-dev"
+    }
+}
