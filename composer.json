@@ -17,8 +17,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "guzzlehttp/psr7": "2.1.x-dev",
-        "weiki/basefunction": "dev-fix-1.0"
+        "guzzlehttp/psr7": "@stable",
+        "weiki/basefunction": "@stable"
     },
     "require-dev": {
         "phpunit/phpunit": "9.5.x-dev"
