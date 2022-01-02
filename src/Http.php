@@ -14,7 +14,7 @@
 
 namespace Weiki\UnifyCode;
 
-class Http extends \GuzzleHttp\Psr7\Response
+class Http
 {
     const HTTP_CONTINUE = 100;
     const HTTP_SWITCHING_PROTOCOLS = 101;
@@ -80,14 +80,26 @@ class Http extends \GuzzleHttp\Psr7\Response
     const HTTP_NOT_EXTENDED = 510; // RFC2774
     const HTTP_NETWORK_AUTHENTICATION_REQUIRED = 511; // RFC6585
 
-    public static function __callStatic($name, $arg)
+    public static function __callStatic($name, $args)
     {
-        $const = static::class . '::HTTP_' . toConst($name);
+        $const = static::toConst($name);
+        $header = [];
+        $content = isset($args[0]) ? $args[0] : null;
 
         if (!defined($const)) {
-            throw new \Error("Call to undefined method " . static::class . "::$name");
+            throw new \Error("Call to undefined method " . static::class . "::" . $name);
         }
 
-        return new static(constant($const));
+        return constant($const);
+    }
+
+    public static function toConst(string $name): string
+    {
+        return static::class . '::HTTP_' . toConst($name);
+    }
+
+    public static function toStatusCode($name)
+    {
+        return constant(Http::toConst($name));
     }
 }

@@ -1,7 +1,7 @@
 {
     "name": "weiki/unifycode_http",
     "description": "通过一致性代码减少代码变种",
-    "keywords": ["http", "code", "psr7"],
+    "keywords": ["http", "code"],
     "type": "libraty",
     "license": "Apache-2.0",
     "autoload": {
@@ -15,12 +15,11 @@
             "email": "happy_gzg@126.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
-        "guzzlehttp/psr7": "@stable",
-        "weiki/basefunction": "@stable"
+        "weiki/basefunction": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "9.5.x-dev"
+        "phpunit/phpunit": "^9.5"
     }
 }

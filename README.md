@@ -10,16 +10,11 @@
 
 ```php
 
-use Psr\Http\Message\ResponseInterface;
 use Weiki\UnifyCode\Http;
 
-echo Http::HTTP_OK; // 200
-
-$response = Http::ok();
-
-var_dump($response instanceof ResponseInterface) // true
-
-$response->getStatusCode(); // 200
-$response->getReasonPhrase(); //OK
+echo Http::HTTP_OK;             // 200
+echo Http::ok();                // 200
+echo Http::toStatusCode('ok');  // 200
+echo Http::toConst('ok');       // HTTP_OK
 
 ```
