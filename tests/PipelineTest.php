@@ -2,7 +2,7 @@
 
 /*
  *--------------------------------------------------------------------------
- * @Class Test
+ * @Class PipelineTest
  *
  *--------------------------------------------------------------------------
  *
@@ -13,9 +13,9 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use Weiki\UnifyCode\Http;
+use Weiki\UnifyCode\Pipeline;
 
-class Test extends TestCase
+class PipelineTest extends TestCase
 {
     public function additionMethods()
     {
@@ -89,17 +89,92 @@ class Test extends TestCase
     /**
      * @dataProvider additionMethods
      */
-    public function testConst($code, $method)
+    public function testFunction($code, $method)
     {
-        $this->assertTrue(defined(Http::toConst($method)));
+        $assert = toJson([
+            'code' => $code,
+            'message' => '你好，中国',
+        ]);
+
+        // 测试函数模式
+        $result = (new Pipeline)->through('handle')->$method();
+        $this->assertEquals($assert, $result);
     }
 
     /**
      * @dataProvider additionMethods
      */
-    public function testStatusCode($code, $method)
+    public function testAnonymousFunction($code, $method)
     {
-        $this->assertEquals($code, Http::toStatusCode($method));
-        $this->assertEquals($code, Http::$method());
+        $assert = toJson([
+            'code' => $code,
+            'message' => '你好，中国',
+        ]);
+
+        // 测试匿名函数模式
+        $result = (new Pipeline)->through(function ($data, $next) {
+            return toJson([
+                'code' => $next($data),
+                'message' => '你好，中国',
+            ]);
+        })->$method();
+
+        $this->assertEquals($assert, $result);
     }
+
+    /**
+     * @dataProvider additionMethods
+     */
+    public function testStaticCall($code, $method)
+    {
+        $assert = toJson([
+            'code' => $code,
+            'message' => '你好，中国',
+        ]);
+
+        // 测试匿名函数模式
+        $result = (new Pipeline)->through(PipelineTest::class . "::staticCallTest")->$method();
+
+        $this->assertEquals($assert, $result);
+    }
+
+    /**
+     * @dataProvider additionMethods
+     */
+    public function testCall($code, $method)
+    {
+        $assert = toJson([
+            'code' => $code,
+            'message' => '你好，中国',
+        ]);
+
+        // 测试匿名函数模式
+        $result = (new Pipeline)->through([[$this, "staticCallTest"]])->$method();
+
+        $this->assertEquals($assert, $result);
+    }
+
+    public static function staticCallTest($data, $next)
+    {
+        return toJson([
+            'code' => $next($data),
+            'message' => '你好，中国',
+        ]);
+    }
+
+    public static function callTest($data, $next)
+    {
+        return toJson([
+            'code' => $next($data),
+            'message' => '你好，中国',
+        ]);
+    }
+}
+
+function handle($data, $next)
+{
+    return toJson([
+        'code' => $next($data),
+        'message' => '你好，中国',
+    ]);
 }

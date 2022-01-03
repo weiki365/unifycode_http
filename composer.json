@@ -17,7 +17,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "weiki/basefunction": "^1.0"
+        "weiki/basefunction": "^1.0.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
